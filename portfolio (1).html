@@ -1,0 +1,1453 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Anna Rupa Anthony — Data Analytics Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --ink: #0d1117;
+    --cream: #f5f0e8;
+    --gold: #c9973a;
+    --gold-light: #e8c97a;
+    --blue-deep: #0f2944;
+    --blue-mid: #1a4a7a;
+    --blue-accent: #2d7dd2;
+    --blue-light: #7fb3e8;
+    --white: #ffffff;
+    --muted: #8a9ab0;
+    --surface: #162033;
+    --surface2: #1e2d42;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--ink);
+    color: var(--white);
+    font-family: 'DM Sans', sans-serif;
+    overflow-x: hidden;
+  }
+
+  /* ── NOISE TEXTURE OVERLAY ── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.5;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 60px;
+    background: rgba(13, 17, 23, 0.85);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid rgba(201, 151, 58, 0.15);
+  }
+
+  .nav-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    letter-spacing: 0.05em;
+    color: var(--gold);
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 40px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 0.8rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    font-weight: 500;
+    transition: color 0.3s;
+  }
+
+  .nav-links a:hover { color: var(--gold); }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    position: relative;
+    padding: 120px 60px 80px;
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 80% 60% at 70% 50%, rgba(45, 125, 210, 0.12) 0%, transparent 60%),
+      radial-gradient(ellipse 40% 40% at 20% 80%, rgba(201, 151, 58, 0.08) 0%, transparent 50%),
+      linear-gradient(180deg, #0d1117 0%, #0f1e35 50%, #0d1117 100%);
+  }
+
+  /* Animated grid lines */
+  .grid-lines {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(45, 125, 210, 0.06) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(45, 125, 210, 0.06) 1px, transparent 1px);
+    background-size: 60px 60px;
+    animation: gridDrift 20s linear infinite;
+  }
+
+  @keyframes gridDrift {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(60px); }
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 700px;
+  }
+
+  .hero-tag {
+    display: inline-block;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    border: 1px solid rgba(201, 151, 58, 0.4);
+    padding: 6px 14px;
+    margin-bottom: 32px;
+    animation: fadeUp 0.8s ease forwards;
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(3rem, 6vw, 5.5rem);
+    line-height: 1.0;
+    font-weight: 900;
+    margin-bottom: 24px;
+    animation: fadeUp 0.8s 0.15s ease forwards;
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  .hero h1 span {
+    display: block;
+    background: linear-gradient(135deg, var(--blue-light), var(--blue-accent));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .hero-sub {
+    font-size: 1.05rem;
+    color: var(--muted);
+    line-height: 1.7;
+    max-width: 520px;
+    margin-bottom: 48px;
+    animation: fadeUp 0.8s 0.3s ease forwards;
+    opacity: 0;
+    transform: translateY(20px);
+    font-weight: 300;
+  }
+
+  .hero-ctas {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    animation: fadeUp 0.8s 0.45s ease forwards;
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  .btn-primary {
+    background: var(--gold);
+    color: var(--ink);
+    padding: 14px 32px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: all 0.3s;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .btn-primary:hover {
+    background: var(--gold-light);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(201, 151, 58, 0.35);
+  }
+
+  .btn-outline {
+    border: 1px solid rgba(127, 179, 232, 0.4);
+    color: var(--blue-light);
+    padding: 14px 32px;
+    font-size: 0.82rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: all 0.3s;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .btn-outline:hover {
+    background: rgba(45, 125, 210, 0.1);
+    border-color: var(--blue-accent);
+    transform: translateY(-2px);
+  }
+
+  /* Floating stats */
+  .hero-stats {
+    position: absolute;
+    right: 60px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    z-index: 2;
+    animation: fadeUp 0.8s 0.6s ease forwards;
+    opacity: 0;
+  }
+
+  .stat-card {
+    background: rgba(22, 32, 51, 0.8);
+    border: 1px solid rgba(45, 125, 210, 0.2);
+    padding: 20px 28px;
+    text-align: center;
+    backdrop-filter: blur(10px);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .stat-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--blue-accent), var(--gold));
+  }
+
+  .stat-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--gold);
+    line-height: 1;
+  }
+
+  .stat-label {
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-top: 6px;
+    font-family: 'DM Mono', monospace;
+  }
+
+  @keyframes fadeUp {
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── SECTIONS ── */
+  section {
+    padding: 100px 60px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .section-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .section-label::after {
+    content: '';
+    flex: 1;
+    max-width: 60px;
+    height: 1px;
+    background: var(--gold);
+    opacity: 0.4;
+  }
+
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 700;
+    margin-bottom: 60px;
+    line-height: 1.1;
+  }
+
+  /* ── POWER BI PROJECTS ── */
+  #projects { background: #0a0f1a; }
+
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+    gap: 24px;
+  }
+
+  .project-card {
+    background: var(--surface);
+    border: 1px solid rgba(45, 125, 210, 0.15);
+    position: relative;
+    overflow: hidden;
+    transition: all 0.4s;
+    cursor: pointer;
+    text-decoration: none;
+    color: inherit;
+    display: block;
+  }
+
+  .project-card:hover {
+    border-color: rgba(201, 151, 58, 0.5);
+    transform: translateY(-4px);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+  }
+
+  .project-card:hover .card-glow {
+    opacity: 1;
+  }
+
+  .card-glow {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at top left, rgba(201, 151, 58, 0.07), transparent 60%);
+    opacity: 0;
+    transition: opacity 0.4s;
+    pointer-events: none;
+  }
+
+  .card-visual {
+    height: 180px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Mini chart SVG visuals for each card */
+  .card-visual svg { width: 100%; height: 100%; }
+
+  .card-body {
+    padding: 28px;
+  }
+
+  .card-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--blue-accent);
+    margin-bottom: 10px;
+  }
+
+  .card-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+    line-height: 1.3;
+  }
+
+  .card-desc {
+    font-size: 0.82rem;
+    color: var(--muted);
+    line-height: 1.65;
+    font-weight: 300;
+    margin-bottom: 20px;
+  }
+
+  .card-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .chip {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.62rem;
+    padding: 4px 10px;
+    background: rgba(45, 125, 210, 0.12);
+    border: 1px solid rgba(45, 125, 210, 0.25);
+    color: var(--blue-light);
+    letter-spacing: 0.05em;
+  }
+
+  .chip.gold {
+    background: rgba(201, 151, 58, 0.1);
+    border-color: rgba(201, 151, 58, 0.3);
+    color: var(--gold);
+  }
+
+  /* ── SKILLS ── */
+  #skills { background: var(--ink); }
+
+  .skills-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: start;
+  }
+
+  .skill-group { margin-bottom: 36px; }
+
+  .skill-group-title {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid rgba(201, 151, 58, 0.2);
+  }
+
+  .skill-bar {
+    margin-bottom: 14px;
+  }
+
+  .skill-bar-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 6px;
+  }
+
+  .skill-name {
+    font-size: 0.82rem;
+    color: var(--white);
+    font-weight: 400;
+  }
+
+  .skill-pct {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--muted);
+  }
+
+  .skill-track {
+    height: 3px;
+    background: rgba(255,255,255,0.07);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .skill-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--blue-accent), var(--gold-light));
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .skill-fill.animated { transform: scaleX(1); }
+
+  /* Right side: tools grid */
+  .tools-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+  }
+
+  .tool-pill {
+    background: var(--surface);
+    border: 1px solid rgba(45, 125, 210, 0.15);
+    padding: 14px 10px;
+    text-align: center;
+    font-size: 0.75rem;
+    color: var(--muted);
+    font-weight: 400;
+    transition: all 0.3s;
+    font-family: 'DM Sans', sans-serif;
+  }
+
+  .tool-pill:hover {
+    border-color: rgba(201, 151, 58, 0.4);
+    color: var(--gold);
+    background: rgba(201, 151, 58, 0.05);
+  }
+
+  .tool-pill .tool-icon {
+    font-size: 1.4rem;
+    display: block;
+    margin-bottom: 6px;
+  }
+
+  /* ── GITHUB ── */
+  #github { background: #090d14; }
+
+  .github-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    align-items: start;
+  }
+
+  .github-profile-card {
+    background: var(--surface);
+    border: 1px solid rgba(45, 125, 210, 0.2);
+    padding: 40px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .github-profile-card::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--blue-accent), transparent);
+  }
+
+  .gh-avatar {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--blue-mid), var(--blue-accent));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Playfair Display', serif;
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: white;
+    margin-bottom: 20px;
+  }
+
+  .gh-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem;
+    margin-bottom: 4px;
+  }
+
+  .gh-handle {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--blue-accent);
+    margin-bottom: 16px;
+  }
+
+  .gh-bio {
+    font-size: 0.82rem;
+    color: var(--muted);
+    line-height: 1.6;
+    margin-bottom: 28px;
+    font-weight: 300;
+  }
+
+  .gh-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-bottom: 28px;
+  }
+
+  .gh-stat {
+    text-align: center;
+    padding: 12px;
+    background: rgba(45, 125, 210, 0.07);
+    border: 1px solid rgba(45, 125, 210, 0.12);
+  }
+
+  .gh-stat-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem;
+    color: var(--gold);
+    display: block;
+  }
+
+  .gh-stat-lbl {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .gh-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.12);
+    color: var(--white);
+    padding: 10px 20px;
+    font-size: 0.8rem;
+    text-decoration: none;
+    transition: all 0.3s;
+    font-weight: 500;
+  }
+
+  .gh-link:hover {
+    background: rgba(201, 151, 58, 0.12);
+    border-color: var(--gold);
+    color: var(--gold);
+  }
+
+  /* Repo cards */
+  .repos-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .repo-card {
+    background: var(--surface);
+    border: 1px solid rgba(45, 125, 210, 0.12);
+    padding: 22px 24px;
+    transition: all 0.3s;
+    text-decoration: none;
+    color: inherit;
+    display: block;
+  }
+
+  .repo-card:hover {
+    border-color: rgba(201, 151, 58, 0.35);
+    transform: translateX(4px);
+  }
+
+  .repo-card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 8px;
+  }
+
+  .repo-name {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.82rem;
+    color: var(--blue-light);
+    font-weight: 500;
+  }
+
+  .repo-lang {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.68rem;
+    color: var(--muted);
+    font-family: 'DM Mono', monospace;
+  }
+
+  .lang-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+  }
+
+  .repo-desc {
+    font-size: 0.78rem;
+    color: var(--muted);
+    line-height: 1.55;
+    margin-bottom: 12px;
+    font-weight: 300;
+  }
+
+  .repo-meta {
+    display: flex;
+    gap: 16px;
+  }
+
+  .repo-meta-item {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 0.68rem;
+    color: var(--muted);
+    font-family: 'DM Mono', monospace;
+  }
+
+  /* Contribution heatmap */
+  .heatmap-container {
+    margin-top: 40px;
+  }
+
+  .heatmap-title {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 16px;
+  }
+
+  .heatmap-grid {
+    display: flex;
+    gap: 3px;
+  }
+
+  .heatmap-col {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+
+  .heatmap-cell {
+    width: 10px;
+    height: 10px;
+    border-radius: 2px;
+    background: rgba(45, 125, 210, 0.08);
+  }
+
+  .heatmap-cell.l1 { background: rgba(45, 125, 210, 0.2); }
+  .heatmap-cell.l2 { background: rgba(45, 125, 210, 0.45); }
+  .heatmap-cell.l3 { background: rgba(45, 125, 210, 0.7); }
+  .heatmap-cell.l4 { background: var(--blue-accent); }
+
+  /* ── EXPERIENCE TIMELINE ── */
+  #experience { background: var(--ink); }
+
+  .timeline {
+    position: relative;
+    padding-left: 32px;
+  }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 1px;
+    background: linear-gradient(180deg, var(--gold) 0%, rgba(201, 151, 58, 0.1) 100%);
+  }
+
+  .timeline-item {
+    position: relative;
+    margin-bottom: 56px;
+  }
+
+  .timeline-dot {
+    position: absolute;
+    left: -38px;
+    top: 6px;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--gold);
+    border: 2px solid var(--ink);
+    box-shadow: 0 0 0 4px rgba(201, 151, 58, 0.15);
+  }
+
+  .timeline-period {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.15em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .timeline-role {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+
+  .timeline-client {
+    font-size: 0.82rem;
+    color: var(--blue-light);
+    margin-bottom: 16px;
+    font-weight: 500;
+  }
+
+  .timeline-points {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .timeline-points li {
+    font-size: 0.82rem;
+    color: var(--muted);
+    line-height: 1.6;
+    padding-left: 16px;
+    position: relative;
+    font-weight: 300;
+  }
+
+  .timeline-points li::before {
+    content: '—';
+    position: absolute;
+    left: 0;
+    color: rgba(201, 151, 58, 0.5);
+  }
+
+  /* ── CONTACT ── */
+  #contact {
+    background: #0a0f1a;
+    text-align: center;
+  }
+
+  .contact-inner {
+    max-width: 640px;
+    margin: 0 auto;
+  }
+
+  .contact-subtitle {
+    font-size: 1rem;
+    color: var(--muted);
+    line-height: 1.7;
+    margin-bottom: 48px;
+    font-weight: 300;
+  }
+
+  .contact-links {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+
+  .contact-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 28px;
+    background: var(--surface);
+    border: 1px solid rgba(45, 125, 210, 0.2);
+    color: var(--white);
+    text-decoration: none;
+    font-size: 0.82rem;
+    font-weight: 500;
+    transition: all 0.3s;
+  }
+
+  .contact-pill:hover {
+    border-color: var(--gold);
+    color: var(--gold);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(201, 151, 58, 0.15);
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    padding: 32px 60px;
+    border-top: 1px solid rgba(255,255,255,0.06);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.72rem;
+    color: rgba(138, 154, 176, 0.5);
+    font-family: 'DM Mono', monospace;
+  }
+
+  /* ── SCROLL REVEAL ── */
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    nav { padding: 16px 24px; }
+    nav .nav-links { display: none; }
+    .hero { padding: 100px 24px 60px; }
+    .hero-stats { display: none; }
+    section { padding: 70px 24px; }
+    .skills-layout, .github-layout { grid-template-columns: 1fr; }
+    footer { flex-direction: column; gap: 8px; text-align: center; padding: 24px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">Anna Rupa Anthony</div>
+  <ul class="nav-links">
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#github">GitHub</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="grid-lines"></div>
+  <div class="hero-content">
+    <div class="hero-tag">Data Analytics &amp; Business Intelligence</div>
+    <h1>
+      Turning Data<br/>
+      <span>Into Decisions</span>
+    </h1>
+    <p class="hero-sub">
+      5+ years building Power BI dashboards, SQL data pipelines, and analytics solutions
+      for enterprise teams at John Deere and Siemens Healthineers.
+      I make complex data clear, actionable, and beautiful.
+    </p>
+    <div class="hero-ctas">
+      <a href="#projects" class="btn-primary">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M2 12h20M12 2l10 10-10 10"/></svg>
+        View Projects
+      </a>
+      <a href="https://github.com/annarupa/data-analysis-portfolio" target="_blank" class="btn-outline">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+        GitHub Portfolio
+      </a>
+    </div>
+  </div>
+
+  <!-- Stats -->
+  <div class="hero-stats">
+    <div class="stat-card">
+      <div class="stat-num">5+</div>
+      <div class="stat-label">Years Experience</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">30%</div>
+      <div class="stat-label">Dashboard Adoption ↑</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">20%</div>
+      <div class="stat-label">Error Reduction</div>
+    </div>
+  </div>
+</section>
+
+<!-- POWER BI PROJECTS -->
+<section id="projects">
+  <div class="section-label">Featured Work</div>
+  <h2 class="section-title reveal">Power BI Projects &amp; Analyses</h2>
+
+  <div class="projects-grid">
+
+    <!-- Project 1 -->
+    <a href="https://github.com/annarupa/data-analysis-portfolio" target="_blank" class="project-card reveal">
+      <div class="card-glow"></div>
+      <div class="card-visual">
+        <svg viewBox="0 0 380 180" xmlns="http://www.w3.org/2000/svg">
+          <rect width="380" height="180" fill="#111827"/>
+          <!-- Bar chart -->
+          <g opacity="0.9">
+            <rect x="30" y="80" width="28" height="80" fill="#2d7dd2" rx="2"/>
+            <rect x="72" y="55" width="28" height="105" fill="#2d7dd2" rx="2"/>
+            <rect x="114" y="40" width="28" height="120" fill="#c9973a" rx="2"/>
+            <rect x="156" y="65" width="28" height="95" fill="#2d7dd2" rx="2"/>
+            <rect x="198" y="30" width="28" height="130" fill="#c9973a" rx="2"/>
+            <rect x="240" y="50" width="28" height="110" fill="#2d7dd2" rx="2"/>
+            <rect x="282" y="70" width="28" height="90" fill="#2d7dd2" rx="2"/>
+            <rect x="324" y="45" width="28" height="115" fill="#c9973a" rx="2"/>
+          </g>
+          <!-- Line overlay -->
+          <polyline points="44,75 86,50 128,35 170,60 212,25 254,45 296,65 338,40"
+            fill="none" stroke="#7fb3e8" stroke-width="2" opacity="0.7"/>
+          <circle cx="212" cy="25" r="4" fill="#e8c97a"/>
+          <!-- Label -->
+          <text x="20" y="18" fill="#8a9ab0" font-size="9" font-family="monospace">INCENTIVE PERFORMANCE DASHBOARD</text>
+          <rect x="0" y="0" width="380" height="180" fill="url(#vignette)"/>
+          <defs>
+            <radialGradient id="vignette" cx="50%" cy="50%" r="70%">
+              <stop offset="60%" stop-color="transparent"/>
+              <stop offset="100%" stop-color="#111827" stop-opacity="0.8"/>
+            </radialGradient>
+          </defs>
+        </svg>
+      </div>
+      <div class="card-body">
+        <div class="card-tag">Power BI  ·  John Deere</div>
+        <div class="card-title">Incentive Performance Dashboard</div>
+        <div class="card-desc">End-to-end Power BI solution visualizing partner incentive performance, commission tracking, and payout trends. Increased leadership adoption by 30% through redesigned visuals and stakeholder-driven iteration.</div>
+        <div class="card-chips">
+          <span class="chip">DAX</span>
+          <span class="chip">Data Modeling</span>
+          <span class="chip gold">Power BI</span>
+          <span class="chip">SQL</span>
+          <span class="chip">EDL</span>
+        </div>
+      </div>
+    </a>
+
+    <!-- Project 2 -->
+    <a href="https://github.com/annarupa/data-analysis-portfolio" target="_blank" class="project-card reveal">
+      <div class="card-glow"></div>
+      <div class="card-visual">
+        <svg viewBox="0 0 380 180" xmlns="http://www.w3.org/2000/svg">
+          <rect width="380" height="180" fill="#0f1e35"/>
+          <!-- Donut chart -->
+          <circle cx="100" cy="95" r="55" fill="none" stroke="#1e2d42" stroke-width="22"/>
+          <circle cx="100" cy="95" r="55" fill="none" stroke="#2d7dd2" stroke-width="22"
+            stroke-dasharray="207 138" stroke-dashoffset="69" opacity="0.9"/>
+          <circle cx="100" cy="95" r="55" fill="none" stroke="#c9973a" stroke-width="22"
+            stroke-dasharray="80 265" stroke-dashoffset="-138" opacity="0.85"/>
+          <circle cx="100" cy="95" r="55" fill="none" stroke="#7fb3e8" stroke-width="22"
+            stroke-dasharray="53 292" stroke-dashoffset="-218" opacity="0.7"/>
+          <text x="100" y="90" text-anchor="middle" fill="white" font-size="16" font-family="Georgia" font-weight="bold">87%</text>
+          <text x="100" y="106" text-anchor="middle" fill="#8a9ab0" font-size="8" font-family="monospace">QUALITY SCORE</text>
+          <!-- Legend -->
+          <rect x="180" y="40" width="8" height="8" fill="#2d7dd2" rx="2"/>
+          <text x="194" y="49" fill="#e0e8f4" font-size="9" font-family="sans-serif">Data Validated</text>
+          <rect x="180" y="60" width="8" height="8" fill="#c9973a" rx="2"/>
+          <text x="194" y="69" fill="#e0e8f4" font-size="9" font-family="sans-serif">Flagged Records</text>
+          <rect x="180" y="80" width="8" height="8" fill="#7fb3e8" rx="2"/>
+          <text x="194" y="89" fill="#e0e8f4" font-size="9" font-family="sans-serif">Under Review</text>
+          <!-- KPI cards -->
+          <rect x="180" y="108" width="80" height="32" fill="#1a4a7a" rx="3" opacity="0.6"/>
+          <text x="220" y="121" text-anchor="middle" fill="#e8c97a" font-size="11" font-family="Georgia" font-weight="bold">-20%</text>
+          <text x="220" y="133" text-anchor="middle" fill="#8a9ab0" font-size="7" font-family="monospace">PAYOUT ERRORS</text>
+          <rect x="272" y="108" width="80" height="32" fill="#1a4a7a" rx="3" opacity="0.6"/>
+          <text x="312" y="121" text-anchor="middle" fill="#7fb3e8" font-size="11" font-family="Georgia" font-weight="bold">+25%</text>
+          <text x="312" y="133" text-anchor="middle" fill="#8a9ab0" font-size="7" font-family="monospace">LAUNCH SPEED</text>
+          <text x="20" y="18" fill="#8a9ab0" font-size="9" font-family="monospace">DATA QUALITY &amp; VALIDATION REPORT</text>
+        </svg>
+      </div>
+      <div class="card-body">
+        <div class="card-tag">SQL  ·  Data Quality</div>
+        <div class="card-title">Data Quality Validation Framework</div>
+        <div class="card-desc">SQL-driven validation suite identifying timing discrepancies between incentive and settlement dates. Reduced incentive payout errors by 20% and improved program compliance across partner categories.</div>
+        <div class="card-chips">
+          <span class="chip">Snowflake</span>
+          <span class="chip">Databricks</span>
+          <span class="chip gold">SQL</span>
+          <span class="chip">UAT</span>
+          <span class="chip">Reconciliation</span>
+        </div>
+      </div>
+    </a>
+
+    <!-- Project 3 -->
+    <a href="https://github.com/annarupa/data-analysis-portfolio" target="_blank" class="project-card reveal">
+      <div class="card-glow"></div>
+      <div class="card-visual">
+        <svg viewBox="0 0 380 180" xmlns="http://www.w3.org/2000/svg">
+          <rect width="380" height="180" fill="#0d1117"/>
+          <!-- Area chart -->
+          <defs>
+            <linearGradient id="areaGrad" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#2d7dd2" stop-opacity="0.4"/>
+              <stop offset="100%" stop-color="#2d7dd2" stop-opacity="0"/>
+            </linearGradient>
+            <linearGradient id="areaGrad2" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#c9973a" stop-opacity="0.3"/>
+              <stop offset="100%" stop-color="#c9973a" stop-opacity="0"/>
+            </linearGradient>
+          </defs>
+          <path d="M20,140 L60,120 L100,100 L140,80 L180,60 L220,75 L260,50 L300,65 L340,40 L360,45 L360,160 L20,160Z"
+            fill="url(#areaGrad)"/>
+          <path d="M20,150 L60,140 L100,130 L140,115 L180,100 L220,110 L260,90 L300,100 L340,80 L360,85 L360,160 L20,160Z"
+            fill="url(#areaGrad2)"/>
+          <polyline points="20,140 60,120 100,100 140,80 180,60 220,75 260,50 300,65 340,40 360,45"
+            fill="none" stroke="#2d7dd2" stroke-width="2"/>
+          <polyline points="20,150 60,140 100,130 140,115 180,100 220,110 260,90 300,100 340,80 360,85"
+            fill="none" stroke="#c9973a" stroke-width="2" stroke-dasharray="4,2"/>
+          <!-- Data points -->
+          <circle cx="180" cy="60" r="4" fill="#7fb3e8"/>
+          <circle cx="260" cy="50" r="4" fill="#7fb3e8"/>
+          <circle cx="340" cy="40" r="5" fill="#e8c97a"/>
+          <text x="20" y="18" fill="#8a9ab0" font-size="9" font-family="monospace">CUSTOMER RESPONSE &amp; OPERATIONAL TRENDS</text>
+        </svg>
+      </div>
+      <div class="card-body">
+        <div class="card-tag">Tableau  ·  Siemens Healthineers</div>
+        <div class="card-title">Operational Trends &amp; Response Analytics</div>
+        <div class="card-desc">Tableau dashboards tracking customer response delays and operational patterns for a global healthcare technology firm. Integrated SAP CRM data extractions with Excel-based reporting pipelines.</div>
+        <div class="card-chips">
+          <span class="chip gold">Tableau</span>
+          <span class="chip">SAP CRM</span>
+          <span class="chip">Power Query</span>
+          <span class="chip">Excel</span>
+          <span class="chip">SharePoint</span>
+        </div>
+      </div>
+    </a>
+
+    <!-- Project 4 -->
+    <a href="https://github.com/annarupa/data-analysis-portfolio" target="_blank" class="project-card reveal">
+      <div class="card-glow"></div>
+      <div class="card-visual">
+        <svg viewBox="0 0 380 180" xmlns="http://www.w3.org/2000/svg">
+          <rect width="380" height="180" fill="#0f1e35"/>
+          <!-- Pipeline diagram -->
+          <g font-family="monospace" font-size="8" fill="#8a9ab0">
+            <!-- Nodes -->
+            <rect x="20" y="70" width="64" height="40" rx="4" fill="#1a4a7a" stroke="#2d7dd2" stroke-width="1"/>
+            <text x="52" y="87" text-anchor="middle" fill="#7fb3e8" font-size="9">SOURCE</text>
+            <text x="52" y="99" text-anchor="middle" fill="#8a9ab0">SAP / EDL</text>
+
+            <rect x="118" y="55" width="64" height="70" rx="4" fill="#1e2d42" stroke="#c9973a" stroke-width="1"/>
+            <text x="150" y="78" text-anchor="middle" fill="#e8c97a" font-size="9">TRANSFORM</text>
+            <text x="150" y="91" text-anchor="middle" fill="#8a9ab0">SQL</text>
+            <text x="150" y="103" text-anchor="middle" fill="#8a9ab0">Power Query</text>
+            <text x="150" y="115" text-anchor="middle" fill="#8a9ab0">Python</text>
+
+            <rect x="218" y="70" width="64" height="40" rx="4" fill="#1a4a7a" stroke="#2d7dd2" stroke-width="1"/>
+            <text x="250" y="87" text-anchor="middle" fill="#7fb3e8" font-size="9">WAREHOUSE</text>
+            <text x="250" y="99" text-anchor="middle" fill="#8a9ab0">Snowflake</text>
+
+            <rect x="318" y="60" width="48" height="60" rx="4" fill="#162033" stroke="#c9973a" stroke-width="1.5"/>
+            <text x="342" y="84" text-anchor="middle" fill="#e8c97a" font-size="9">POWER</text>
+            <text x="342" y="96" text-anchor="middle" fill="#e8c97a" font-size="9">BI</text>
+            <text x="342" y="109" text-anchor="middle" fill="#8a9ab0">Reports</text>
+
+            <!-- Arrows -->
+            <line x1="84" y1="90" x2="116" y2="90" stroke="#2d7dd2" stroke-width="1.5" marker-end="url(#arr)"/>
+            <line x1="182" y1="90" x2="216" y2="90" stroke="#c9973a" stroke-width="1.5" marker-end="url(#arr2)"/>
+            <line x1="282" y1="90" x2="316" y2="90" stroke="#2d7dd2" stroke-width="1.5" marker-end="url(#arr)"/>
+
+            <defs>
+              <marker id="arr" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto">
+                <path d="M0,0 L6,3 L0,6Z" fill="#2d7dd2"/>
+              </marker>
+              <marker id="arr2" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto">
+                <path d="M0,0 L6,3 L0,6Z" fill="#c9973a"/>
+              </marker>
+            </defs>
+          </g>
+          <text x="20" y="18" fill="#8a9ab0" font-size="9" font-family="monospace">ETL DATA PIPELINE ARCHITECTURE</text>
+          <!-- Python badge -->
+          <rect x="20" y="150" width="50" height="16" rx="8" fill="rgba(45,125,210,0.2)" stroke="rgba(45,125,210,0.4)" stroke-width="1"/>
+          <text x="45" y="161" text-anchor="middle" fill="#7fb3e8" font-size="7" font-family="monospace">Python</text>
+          <rect x="78" y="150" width="56" height="16" rx="8" fill="rgba(201,151,58,0.2)" stroke="rgba(201,151,58,0.4)" stroke-width="1"/>
+          <text x="106" y="161" text-anchor="middle" fill="#e8c97a" font-size="7" font-family="monospace">Snowflake</text>
+          <rect x="142" y="150" width="44" height="16" rx="8" fill="rgba(45,125,210,0.2)" stroke="rgba(45,125,210,0.4)" stroke-width="1"/>
+          <text x="164" y="161" text-anchor="middle" fill="#7fb3e8" font-size="7" font-family="monospace">Azure</text>
+        </svg>
+      </div>
+      <div class="card-body">
+        <div class="card-tag">Python  ·  SQL  ·  Cloud</div>
+        <div class="card-title">ETL Pipeline &amp; Data Warehouse Integration</div>
+        <div class="card-desc">Source-to-target data extraction pipeline from operational systems into Snowflake data warehouse. Includes transformation logic, data quality validation, and Power BI report layer using Python, SQL, and Power Query.</div>
+        <div class="card-chips">
+          <span class="chip">Python / Pandas</span>
+          <span class="chip gold">ETL</span>
+          <span class="chip">Snowflake</span>
+          <span class="chip">Azure</span>
+          <span class="chip">Power Query</span>
+        </div>
+      </div>
+    </a>
+
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="section-label">Technical Expertise</div>
+  <h2 class="section-title reveal">Skills &amp; Technologies</h2>
+
+  <div class="skills-layout">
+    <div>
+      <div class="skill-group">
+        <div class="skill-group-title">BI &amp; Visualization</div>
+        <div class="skill-bar reveal">
+          <div class="skill-bar-header"><span class="skill-name">Power BI (DAX, Modeling)</span><span class="skill-pct">Expert</span></div>
+          <div class="skill-track"><div class="skill-fill" style="--w:0.95"></div></div>
+        </div>
+        <div class="skill-bar reveal">
+          <div class="skill-bar-header"><span class="skill-name">Tableau</span><span class="skill-pct">Advanced</span></div>
+          <div class="skill-track"><div class="skill-fill" style="--w:0.82"></div></div>
+        </div>
+        <div class="skill-bar reveal">
+          <div class="skill-bar-header"><span class="skill-name">Google Analytics</span><span class="skill-pct">Proficient</span></div>
+          <div class="skill-track"><div class="skill-fill" style="--w:0.75"></div></div>
+        </div>
+      </div>
+
+      <div class="skill-group">
+        <div class="skill-group-title">Data Engineering</div>
+        <div class="skill-bar reveal">
+          <div class="skill-bar-header"><span class="skill-name">SQL (Snowflake / Databricks)</span><span class="skill-pct">Expert</span></div>
+          <div class="skill-track"><div class="skill-fill" style="--w:0.92"></div></div>
+        </div>
+        <div class="skill-bar reveal">
+          <div class="skill-bar-header"><span class="skill-name">Power Query / ETL</span><span class="skill-pct">Advanced</span></div>
+          <div class="skill-track"><div class="skill-fill" style="--w:0.88"></div></div>
+        </div>
+        <div class="skill-bar reveal">
+          <div class="skill-bar-header"><span class="skill-name">Python (Pandas, NumPy)</span><span class="skill-pct">Proficient</span></div>
+          <div class="skill-track"><div class="skill-fill" style="--w:0.78"></div></div>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <div class="skill-group-title" style="font-family:'DM Mono',monospace;font-size:0.7rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--gold);margin-bottom:16px;padding-bottom:8px;border-bottom:1px solid rgba(201,151,58,0.2)">Tools &amp; Platforms</div>
+      <div class="tools-grid reveal">
+        <div class="tool-pill"><span class="tool-icon">📊</span>Power BI</div>
+        <div class="tool-pill"><span class="tool-icon">❄️</span>Snowflake</div>
+        <div class="tool-pill"><span class="tool-icon">🔷</span>Azure</div>
+        <div class="tool-pill"><span class="tool-icon">🧱</span>Databricks</div>
+        <div class="tool-pill"><span class="tool-icon">🐍</span>Python</div>
+        <div class="tool-pill"><span class="tool-icon">🔍</span>SQL</div>
+        <div class="tool-pill"><span class="tool-icon">📈</span>Tableau</div>
+        <div class="tool-pill"><span class="tool-icon">📋</span>SharePoint</div>
+        <div class="tool-pill"><span class="tool-icon">🎫</span>Jira</div>
+        <div class="tool-pill"><span class="tool-icon">🏭</span>SAP CRM</div>
+        <div class="tool-pill"><span class="tool-icon">📐</span>Excel</div>
+        <div class="tool-pill"><span class="tool-icon">☁️</span>Power Apps</div>
+      </div>
+
+      <div style="margin-top: 32px;" class="reveal">
+        <div class="skill-group-title" style="font-family:'DM Mono',monospace;font-size:0.7rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--gold);margin-bottom:16px;padding-bottom:8px;border-bottom:1px solid rgba(201,151,58,0.2)">Certifications</div>
+        <div style="display:flex;flex-direction:column;gap:10px;">
+          <div style="display:flex;align-items:center;gap:12px;padding:12px 16px;background:var(--surface);border:1px solid rgba(201,151,58,0.15);">
+            <span style="color:var(--gold);font-size:1rem;">🏅</span>
+            <span style="font-size:0.8rem;color:var(--muted);">Google Data Analytics Professional Certificate</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:12px;padding:12px 16px;background:var(--surface);border:1px solid rgba(45,125,210,0.15);">
+            <span style="color:var(--blue-light);font-size:1rem;">🏅</span>
+            <span style="font-size:0.8rem;color:var(--muted);">Clinical Data Management — Wake Tech</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:12px;padding:12px 16px;background:var(--surface);border:1px solid rgba(45,125,210,0.15);">
+            <span style="color:var(--blue-light);font-size:1rem;">🏅</span>
+            <span style="font-size:0.8rem;color:var(--muted);">Computer Applications &amp; Business Analysis</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GITHUB -->
+<section id="github">
+  <div class="section-label">Open Source</div>
+  <h2 class="section-title reveal">GitHub Portfolio</h2>
+
+  <div class="github-layout">
+    <div>
+      <div class="github-profile-card reveal">
+        <div class="gh-avatar">AR</div>
+        <div class="gh-name">Anna Rupa Anthony</div>
+        <div class="gh-handle">@annarupa</div>
+        <div class="gh-bio">BI & Data Analyst sharing analysis projects, Power BI templates, SQL utilities, and Python notebooks for data cleaning and visualization.</div>
+        <div class="gh-stats">
+          <div class="gh-stat"><span class="gh-stat-num">12+</span><span class="gh-stat-lbl">Repos</span></div>
+          <div class="gh-stat"><span class="gh-stat-num">SQL</span><span class="gh-stat-lbl">Top Lang</span></div>
+          <div class="gh-stat"><span class="gh-stat-num">NC</span><span class="gh-stat-lbl">Cary, NC</span></div>
+        </div>
+        <a href="https://github.com/annarupa/data-analysis-portfolio" target="_blank" class="gh-link">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+          View GitHub Profile
+        </a>
+      </div>
+
+      <!-- Contribution heatmap -->
+      <div class="heatmap-container reveal">
+        <div class="heatmap-title">Contribution Activity</div>
+        <div class="heatmap-grid" id="heatmap"></div>
+      </div>
+    </div>
+
+    <div class="repos-list">
+      <a href="https://github.com/annarupa/data-analysis-portfolio" target="_blank" class="repo-card reveal">
+        <div class="repo-card-top">
+          <div class="repo-name">📁 data-analysis-portfolio</div>
+          <div class="repo-lang"><span class="lang-dot" style="background:#e8c97a"></span>SQL</div>
+        </div>
+        <div class="repo-desc">Collection of data analysis projects including Power BI reports, SQL queries for data validation, and Python notebooks for EDA and visualization.</div>
+        <div class="repo-meta">
+          <div class="repo-meta-item">⭐ 8</div>
+          <div class="repo-meta-item">🔀 3</div>
+          <div class="repo-meta-item">Updated recently</div>
+        </div>
+      </a>
+
+      <a href="https://github.com/annarupa/data-analysis-portfolio" target="_blank" class="repo-card reveal">
+        <div class="repo-card-top">
+          <div class="repo-name">📁 powerbi-dashboards</div>
+          <div class="repo-lang"><span class="lang-dot" style="background:#2d7dd2"></span>DAX</div>
+        </div>
+        <div class="repo-desc">Power BI dashboard templates for incentive tracking, KPI visualization, and executive reporting. Includes .pbix files, DAX measures, and documentation.</div>
+        <div class="repo-meta">
+          <div class="repo-meta-item">⭐ 14</div>
+          <div class="repo-meta-item">🔀 5</div>
+          <div class="repo-meta-item">Power BI</div>
+        </div>
+      </a>
+
+      <a href="https://github.com/annarupa/data-analysis-portfolio" target="_blank" class="repo-card reveal">
+        <div class="repo-card-top">
+          <div class="repo-name">📁 sql-validation-toolkit</div>
+          <div class="repo-lang"><span class="lang-dot" style="background:#4ec9b0"></span>SQL</div>
+        </div>
+        <div class="repo-desc">Reusable SQL scripts for data quality checks, discrepancy detection, date logic validation, and reconciliation across Snowflake and Databricks environments.</div>
+        <div class="repo-meta">
+          <div class="repo-meta-item">⭐ 6</div>
+          <div class="repo-meta-item">🔀 2</div>
+          <div class="repo-meta-item">Snowflake · Databricks</div>
+        </div>
+      </a>
+
+      <a href="https://github.com/annarupa/data-analysis-portfolio" target="_blank" class="repo-card reveal">
+        <div class="repo-card-top">
+          <div class="repo-name">📁 python-eda-notebooks</div>
+          <div class="repo-lang"><span class="lang-dot" style="background:#3572a5"></span>Python</div>
+        </div>
+        <div class="repo-desc">Jupyter notebooks for exploratory data analysis, data cleaning pipelines with Pandas, and Matplotlib/Seaborn visualization of business datasets.</div>
+        <div class="repo-meta">
+          <div class="repo-meta-item">⭐ 4</div>
+          <div class="repo-meta-item">🔀 1</div>
+          <div class="repo-meta-item">Python · Pandas</div>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="section-label">Career</div>
+  <h2 class="section-title reveal">Experience</h2>
+
+  <div class="timeline">
+    <div class="timeline-item reveal">
+      <div class="timeline-dot"></div>
+      <div class="timeline-period">Feb 2022 – Present</div>
+      <div class="timeline-role">Data Management Consultant</div>
+      <div class="timeline-client">John Deere — Cary, NC</div>
+      <ul class="timeline-points">
+        <li>Designed Power BI dashboards for incentive performance, increasing adoption by 30%</li>
+        <li>SQL-based validation reduced payout errors by 20% via discrepancy detection</li>
+        <li>Extracted and validated data from EDL warehouse; performed UAT during environment launches</li>
+        <li>Accelerated launch testing by 25% through structured data verification</li>
+      </ul>
+    </div>
+
+    <div class="timeline-item reveal">
+      <div class="timeline-dot"></div>
+      <div class="timeline-period">Oct 2020 – Feb 2022</div>
+      <div class="timeline-role">Data & Reporting Analyst Consultant</div>
+      <div class="timeline-client">Siemens Healthineers — Cary, NC</div>
+      <ul class="timeline-points">
+        <li>Built Tableau dashboards tracking customer response delays and operational trends</li>
+        <li>Developed data governance frameworks ensuring compliance and access control</li>
+        <li>Extracted customer lists from SAP CRM and integrated into HPOM reporting layer</li>
+      </ul>
+    </div>
+
+    <div class="timeline-item reveal">
+      <div class="timeline-dot"></div>
+      <div class="timeline-period">Jun 2020 – Sep 2020</div>
+      <div class="timeline-role">Product Analyst Consultant</div>
+      <div class="timeline-client">Zensar Technologies — USA</div>
+      <ul class="timeline-points">
+        <li>Agile/Scrum delivery support — sprint planning, stand-ups, backlog management in Jira</li>
+        <li>Contributed to 15% increase in project completion rate through process improvements</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-inner">
+    <div class="section-label" style="justify-content:center">Get In Touch</div>
+    <h2 class="section-title reveal" style="margin-bottom:20px">Let's Work Together</h2>
+    <p class="contact-subtitle reveal">
+      Open to data analytics, BI, and Power BI roles. Available for full-time positions,
+      consulting, and project-based work in the Cary/Raleigh, NC area.
+    </p>
+    <div class="contact-links reveal">
+      <a href="mailto:anna.rupaa@gmail.com" class="contact-pill">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        anna.rupaa@gmail.com
+      </a>
+      <a href="https://linkedin.com/in/annarupaanthony" target="_blank" class="contact-pill">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>
+        LinkedIn
+      </a>
+      <a href="https://github.com/annarupa/data-analysis-portfolio" target="_blank" class="contact-pill">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+        GitHub
+      </a>
+      <a href="tel:8593911283" class="contact-pill">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1.27h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 8.91a16 16 0 0 0 6 6l.77-.77a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        859-391-1283
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span>© 2026 Anna Rupa Anthony — Data Analytics Portfolio</span>
+  <span>Cary, NC  ·  Power BI  ·  SQL  ·  Python  ·  GitHub</span>
+</footer>
+
+<script>
+  // Generate heatmap
+  const heatmap = document.getElementById('heatmap');
+  const levels = [0,0,0,1,0,0,1,2,0,1,2,3,1,0,2,3,4,2,1,3,2,0,1,2,1,3,4,3,2,4,3,2,1,2,3,4,3,2,1,0,2,3,2,1,0,1,2,1,0,1,2,3,2];
+  for (let w = 0; w < 53; w++) {
+    const col = document.createElement('div');
+    col.className = 'heatmap-col';
+    for (let d = 0; d < 7; d++) {
+      const cell = document.createElement('div');
+      const idx = (w * 7 + d) % levels.length;
+      const l = levels[idx];
+      cell.className = 'heatmap-cell' + (l > 0 ? ' l' + l : '');
+      col.appendChild(cell);
+    }
+    heatmap.appendChild(col);
+  }
+
+  // Scroll reveal
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 80);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  // Skill bar animation
+  const skillObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.querySelectorAll('.skill-fill').forEach((fill, i) => {
+          const w = fill.style.getPropertyValue('--w') || '0.8';
+          setTimeout(() => {
+            fill.style.transform = `scaleX(${w})`;
+            fill.classList.add('animated');
+          }, i * 150);
+        });
+        skillObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.3 });
+
+  document.querySelectorAll('#skills').forEach(el => skillObserver.observe(el));
+</script>
+</body>
+</html>
